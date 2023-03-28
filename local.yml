@@ -1,0 +1,6 @@
+- hosts: localhost
+  tasks:
+    - include: tasks/nvim-setup.yml
+    - include: tasks/nvim-config.yml
+    - include: tasks/utilities.yml
+
