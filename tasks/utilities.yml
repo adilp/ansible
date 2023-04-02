@@ -6,3 +6,4 @@
     - telnet
     - wget
     - ripgrep
+    - starship
