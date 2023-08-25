@@ -8,3 +8,5 @@
     - ripgrep
     - starship
     - fzf
+    - dotnet
+    - lazygit
