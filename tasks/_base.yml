@@ -1,0 +1,108 @@
+# Base Setup which is needed for everybody
+#
+# parameters:
+# - email: foo.bar@sandstorm-media.de
+# - name: Sebastian Kurfürst
+# - additional_gitignore: (optional)
+
+---
+- file: path=~/Library state=directory
+- file: path=~/Library/LaunchAgents state=directory
+
+- name: 'Install homebrew cask (tap)'
+  homebrew_tap: tap=caskroom/cask
+  tags: ['software']
+
+- name: 'update homebrew'
+  homebrew: update_homebrew=yes upgrade_all=no
+
+- name: 'Install homebrew cask'
+  homebrew: name=brew-cask state=latest
+
+# - include: git.yml email={{ email }} name={{ name }} additional_gitignore="{{ additional_gitignore | default('') }}"
+# - include: oh-my-zsh.yml
+# - include: ruby.yml version=2.2.2 is_global=1
+# - include: nginx.yml
+# - include: mysql.yml
+# - include: php.yml
+# - include: nodejs.yml
+
+
+
+# - name: 'Install TextWrangler (REMINDER: install command line tools manually)'
+#   homebrew_cask: name=textwrangler
+#   tags: ['software']
+
+- homebrew_cask: name=java
+  tags: ['software']
+- homebrew_cask: name=iterm2
+  tags: ['software']
+- homebrew_cask: name=sqlpro-for-postgres
+  tags: ['software']
+- homebrew_cask: name=adobe-reader
+  tags: ['software']
+- homebrew_cask: name=slack
+  tags: ['software']
+- homebrew_cask: name=akiflow
+  tags: ['software']
+- homebrew_cask: name=vlc
+  tags: ['software']
+- homebrew_cask: name=discord
+  tags: ['software']
+- homebrew_cask: name=obsidian
+  tags: ['software']
+- homebrew_cask: name=brave-browser
+  tags: ['software']
+
+- homebrew: name=wget
+  tags: ['software']
+- homebrew: name=jq
+  tags: ['software']
+
+# needed for invoice PDF conversion
+# /usr/local/bin/gm convert -density 300 source.pdf -density 72 -page A4 converted.pdf
+# - homebrew: name=graphicsmagick
+#   tags: ['software']
+# - homebrew: name=ghostscript
+#   tags: ['software']
+
+
+- include: ../tasks/dmg-install.yml appName=Firefox dmgURL=https://download.mozilla.org/?product=firefox-29.0.1-SSL&os=osx&lang=de
+  tags: ['software']
+
+# - include: ../tasks/dmg-install.yml appName=Thunderbird dmgURL=https://download.mozilla.org/?product=thunderbird-24.5.0&os=osx&lang=de
+#   tags: ['software']
+
+- include: ../tasks/dmg-install.yml appName=GoogleChrome dmgURL=https://dl.google.com/chrome/mac/stable/GGRO/googlechrome.dmg
+  tags: ['software']
+
+  # Google Chrome ist nor working because of the space. The DMG is NOT mounted according to the filename of the dmg.
+
+# - gem: name=bundler user_install=no
+#   tags: ['software']
+#   notify:
+#     - rehash rbenv
+
+# - gem: name=compass user_install=no
+#   tags: ['software']
+#   notify:
+#     - rehash rbenv
+
+# - name: 'Install groovy to /usr/local/Cellar/groovy/2.3.0/'
+#   homebrew: name=groovy
+#   tags: ['software']
+
+
+# - name: create ssh config.d directory
+#   file: path=~/.ssh/config.d state=directory
+#   tags: ['ssh']
+#
+# - name: Common SSH Config
+#   template: src=ssh/commonConfig dest=~/.ssh/config.d/common
+#   notify:
+#     - regenerate ssh config
+#   tags: ['ssh']
+#
+# - name: regenerate ssh config
+#   assemble: src=~/.ssh/config.d dest=~/.ssh/config backup=yes
+#   tags: ['ssh']
